@@ -1,6 +1,6 @@
 package org.wildfly.swarm.examples.jaas.basic;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.GET;
@@ -13,19 +13,20 @@ import javax.ws.rs.core.SecurityContext;
  * @author Ken Finnigan
  */
 @Path("/")
-@ApplicationScoped
+@RequestScoped
 public class EmployeeResource {
 
     @PersistenceContext
-    EntityManager em;
-    @Context 
-    SecurityContext securityContext;
+    private EntityManager em;
+
+    @Context
+    private SecurityContext securityContext;
 
     @GET
     @Produces("application/json")
     public Employee[] get() {
         return securityContext.isUserInRole("admin")
-            ? em.createNamedQuery("Employee.findAll", Employee.class).getResultList().toArray(new Employee[0])
-            : new Employee[0];
+                ? em.createNamedQuery("Employee.findAll", Employee.class).getResultList().toArray(new Employee[0])
+                : new Employee[0];
     }
 }

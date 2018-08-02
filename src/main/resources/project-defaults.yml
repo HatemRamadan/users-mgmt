@@ -24,7 +24,7 @@ swarm:
   datasources:
     data-sources:
       MyDS:
-        driver-name: h2
+        driver-name: mysql
         connection-url: jdbc:mysql://localhost:3306/AUTHDB
-        user-name: sa
-        password: sa
+        user-name: root
+        password: P@ssw0rd

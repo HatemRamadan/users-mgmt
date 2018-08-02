@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Arun Gupta
  */
 @Entity
-@Table(name = "REST_DB_ACCESS")
+@Table(name = "USERS")
 @NamedQueries({
         @NamedQuery(name = "Employee.findAll", query = "SELECT e FROM Employee e")
 })

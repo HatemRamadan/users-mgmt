@@ -8,12 +8,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <!--<parent>-->
-        <groupId>io.thorntail.examples</groupId>
-        <!--<artifactId>example-jaas-parent</artifactId>-->
-        <version>2.0.0.Final</version>
-    <!--</parent>-->
-
+    <groupId>io.thorntail.examples</groupId>
+    <version>2.0.0.Final</version>
     <artifactId>example-jaas-basic</artifactId>
 
     <name>Thorntail Examples: Security JAAS Basic</name>
@@ -22,17 +18,17 @@
     <packaging>war</packaging>
 
     <properties>
-        <version.resteasy>3.0.14.Final</version.resteasy>
         <version.thorntail>${project.version}</version.thorntail>
 
         <maven.min.version>3.2.1</maven.min.version>
 
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
-
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <failOnMissingWebXml>false</failOnMissingWebXml>
+
+        <version.mysql>8.0.11</version.mysql>
     </properties>
 
     <dependencyManagement>
@@ -52,18 +48,21 @@
             <groupId>io.thorntail</groupId>
             <artifactId>jaxrs</artifactId>
         </dependency>
+
         <dependency>
             <groupId>io.thorntail</groupId>
             <artifactId>cdi</artifactId>
         </dependency>
+
         <dependency>
             <groupId>io.thorntail</groupId>
-            <artifactId>jpa</artifactId>
+            <artifactId>jpa-eclipselink</artifactId>
         </dependency>
+
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>1.4.187</version>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${version.mysql}</version>
         </dependency>
     </dependencies>
 

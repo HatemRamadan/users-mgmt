@@ -12,7 +12,9 @@
       <configuration>
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="" />
-        <datasource-mapping />
+        <datasource-mapping>
+          <factory-entry name="MyPU" />
+        </datasource-mapping>
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/main/resources/META-INF/persistence.xml" />
       </configuration>
     </facet>
@@ -34,6 +36,9 @@
     <orderEntry type="library" name="Maven: org.jboss.shrinkwrap:shrinkwrap-impl-base:1.2.6" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.shrinkwrap:shrinkwrap-spi:1.2.6" level="project" />
     <orderEntry type="library" name="Maven: org.jboss:jandex:2.0.3.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.thorntail:bootstrap:2.0.0.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.jboss.modules:jboss-modules:1.6.4.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.17" level="project" />
     <orderEntry type="library" name="Maven: io.thorntail:config-api:1.4.0" level="project" />
     <orderEntry type="library" name="Maven: io.thorntail:config-api-runtime:1.4.0" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.logging:jboss-logging:3.3.1.Final" level="project" />
@@ -85,16 +90,18 @@
     <orderEntry type="library" name="Maven: org.jboss.openjdk-orb:openjdk-orb:8.0.4.Final" level="project" />
     <orderEntry type="library" name="Maven: javax.enterprise:cdi-api:1.2" level="project" />
     <orderEntry type="library" name="Maven: javax.inject:javax.inject:1" level="project" />
+    <orderEntry type="library" name="Maven: io.thorntail:jpa-eclipselink:2.0.0.Final" level="project" />
     <orderEntry type="library" name="Maven: io.thorntail:jpa:2.0.0.Final" level="project" />
     <orderEntry type="library" name="Maven: io.thorntail:datasources:2.0.0.Final" level="project" />
     <orderEntry type="library" name="Maven: io.thorntail:jca:2.0.0.Final" level="project" />
     <orderEntry type="library" name="Maven: io.thorntail:connector:2.0.0.Final" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.spec.javax.resource:jboss-connector-api_1.7_spec:1.0.0.Final" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.ironjacamar:ironjacamar-jdbc:1.4.6.Final" level="project" />
-    <orderEntry type="library" name="Maven: io.thorntail:bootstrap:2.0.0.Final" level="project" />
-    <orderEntry type="library" name="Maven: org.jboss.modules:jboss-modules:1.6.4.Final" level="project" />
-    <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.17" level="project" />
     <orderEntry type="library" name="Maven: org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final" level="project" />
-    <orderEntry type="library" name="Maven: com.h2database:h2:1.4.187" level="project" />
+    <orderEntry type="library" name="Maven: org.wildfly:jipijapa-eclipselink:11.0.0.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.wildfly:jipijapa-spi:11.0.0.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.jboss:jboss-vfs:3.2.12.Final" level="project" />
+    <orderEntry type="library" name="Maven: mysql:mysql-connector-java:8.0.11" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: com.google.protobuf:protobuf-java:2.6.0" level="project" />
   </component>
 </module>
