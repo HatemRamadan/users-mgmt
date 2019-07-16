@@ -1,6 +1,12 @@
 <component name="ArtifactManager">
   <artifact type="war" name="example-jaas-basic:war">
     <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>example-jaas-basic</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
     <root id="archive" name="example-jaas-basic.war">
       <element id="artifact" artifact-name="example-jaas-basic:war exploded" />
     </root>
