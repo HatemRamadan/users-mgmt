@@ -7,27 +7,20 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
-    <groupId>io.thorntail.examples</groupId>
-    <version>2.0.0.Final</version>
-    <artifactId>example-jaas-basic</artifactId>
-
-    <name>Thorntail Examples: Security JAAS Basic</name>
-    <description>Thorntail Examples: Security JAAS Basic</description>
-
+    <groupId>com.sumerge.program</groupId>
+    <version>1.0</version>
+    <artifactId>jaas-basic</artifactId>
+    <name>JAAS Basic Authentication</name>
     <packaging>war</packaging>
 
     <properties>
-        <version.thorntail>${project.version}</version.thorntail>
-
-        <maven.min.version>3.2.1</maven.min.version>
-
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <version.thorntail>2.4.0.Final</version.thorntail>
         <maven.compiler.source>1.8</maven.compiler.source>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.target>1.8</maven.compiler.target>
         <failOnMissingWebXml>false</failOnMissingWebXml>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
+        <eclipselink.version>2.6.0</eclipselink.version>
         <version.mysql>8.0.11</version.mysql>
     </properties>
 
@@ -36,9 +29,9 @@
             <dependency>
                 <groupId>io.thorntail</groupId>
                 <artifactId>bom-all</artifactId>
-                <version>${project.version}</version>
-                <type>pom</type>
+                <version>${version.thorntail}</version>
                 <scope>import</scope>
+                <type>pom</type>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -46,7 +39,17 @@
     <dependencies>
         <dependency>
             <groupId>io.thorntail</groupId>
+            <artifactId>jpa-eclipselink</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.thorntail</groupId>
             <artifactId>jaxrs</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.thorntail</groupId>
+            <artifactId>datasources</artifactId>
         </dependency>
 
         <dependency>
@@ -56,7 +59,12 @@
 
         <dependency>
             <groupId>io.thorntail</groupId>
-            <artifactId>jpa-eclipselink</artifactId>
+            <artifactId>ejb</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.thorntail</groupId>
+            <artifactId>webservices</artifactId>
         </dependency>
 
         <dependency>
@@ -64,43 +72,59 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>${version.mysql}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>eclipselink</artifactId>
+            <version>${eclipselink.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>7.0</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>
         <finalName>${project.artifactId}</finalName>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>io.thorntail</groupId>
-                    <artifactId>thorntail-maven-plugin</artifactId>
-                    <version>${version.thorntail}</version>
-                    <configuration>
-                        <jvmArguments>
-                            <jvmArgument>-Xmx128m</jvmArgument>
-                        </jvmArguments>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>package</id>
-                            <goals>
-                                <goal>package</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-            </plugins>
-        </pluginManagement>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>io.thorntail</groupId>
                 <artifactId>thorntail-maven-plugin</artifactId>
+                <version>${version.thorntail}</version>
+
                 <executions>
                     <execution>
-                        <id>package</id>
+                        <goals>
+                            <goal>package</goal>
+                        </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <bundleDependencies>false</bundleDependencies>
+                    <properties>
+                        <swarm.bind.address>0.0.0.0</swarm.bind.address>
+                        <swarm.http.port>8880</swarm.http.port>
+                    </properties>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
             </plugin>
         </plugins>
     </build>
-
 </project>

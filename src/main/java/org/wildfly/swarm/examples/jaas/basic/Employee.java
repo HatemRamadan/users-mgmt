@@ -2,7 +2,6 @@ package org.wildfly.swarm.examples.jaas.basic;
 
 import java.io.Serializable;
 import java.util.Objects;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -87,10 +86,7 @@ public class Employee implements Serializable {
         if (!(obj instanceof Employee))
             return false;
         Employee that = (Employee) obj;
-        if (that.name.equals(this.name) && that.id == this.id)
-            return true;
-        else
-            return false;
+		return that.name.equals(this.name) && that.id == this.id;
     }
 
     @Override

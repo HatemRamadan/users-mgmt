@@ -1,6 +1,6 @@
 swarm:
   deployment:
-    example-jaas-basic.war:
+    jaas-basic.war:
       web:
         login-config:
           auth-method: BASIC
@@ -18,13 +18,17 @@ swarm:
               code: Database
               flag: required
               module-options:
-                dsJndiName: java:jboss/datasources/MyDS
+                dsJndiName: java:jboss/datasources/studentdb
                 principalsQuery: SELECT PASSWORD FROM USERS WHERE USERNAME=?
                 rolesQuery: SELECT ROLE, 'Roles' FROM USERS WHERE USERNAME=?
   datasources:
+    jdbc-drivers:
+      com.mysql:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        driver-module-name: com.mysql
     data-sources:
-      MyDS:
-        driver-name: mysql
-        connection-url: jdbc:mysql://localhost:3306/AUTHDB
+      studentdb:
+        driver-name: com.mysql
+        connection-url: jdbc:mysql://mysql-host:3306/AUTHDB
         user-name: root
         password: P@ssw0rd

@@ -13,7 +13,7 @@ You can run it many ways:
 
 ## Use
 
-http://localhost:8080/
+http://localhost:8880/
 
 You can see a Basic access authentication dialog for username/password.
 
