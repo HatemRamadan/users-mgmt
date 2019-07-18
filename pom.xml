@@ -20,8 +20,8 @@
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <eclipselink.version>2.6.0</eclipselink.version>
-        <version.mysql>8.0.11</version.mysql>
+        <version.eclipselink>2.2.1</version.eclipselink>
+        <version.mysql>8.0.16</version.mysql>
     </properties>
 
     <dependencyManagement>
@@ -75,8 +75,8 @@
 
         <dependency>
             <groupId>org.eclipse.persistence</groupId>
-            <artifactId>eclipselink</artifactId>
-            <version>${eclipselink.version}</version>
+            <artifactId>javax.persistence</artifactId>
+            <version>${version.eclipselink}</version>
             <scope>provided</scope>
         </dependency>
 

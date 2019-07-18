@@ -25,14 +25,20 @@ public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(length = 40)
+    @Column(name = "NAME", length = 40)
     private String name;
 
+    @Column(name = "USERNAME")
+    private String username;
+
+    @Column(name = "PASSWORD")
     private String password;
 
+    @Column(name = "ROLE")
     private String role;
 
     public User() {
@@ -56,6 +62,14 @@ public class User implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {

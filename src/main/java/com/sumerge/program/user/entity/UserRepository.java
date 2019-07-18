@@ -20,6 +20,7 @@ public class UserRepository {
 	private EntityManager em;
 
 	public List<User> getAllUsers() {
+		LOGGER.info("Fetching users list");
 		try {
 			return em.createNamedQuery("User.findAll", User.class).getResultList();
 		} catch (Exception e) {
@@ -28,10 +29,10 @@ public class UserRepository {
 		}
 	}
 
-	public boolean addUser(User user) {
+	public void addUser(User user) {
+		LOGGER.info("Saving new user " + user);
 		try {
 			em.persist(user);
-			return true;
 		} catch (Exception e) {
 			LOGGER.log(SEVERE, e.getMessage(), e);
 			throw e;

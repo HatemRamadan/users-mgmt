@@ -15,7 +15,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
-import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 
 /**
  * @author Ahmed Anwar
@@ -52,12 +51,12 @@ public class UserResource
     public Response post(User user) {
         LOGGER.info("Entering post with user " + securityContext.getUserPrincipal().toString());
 		try {
+			repo.addUser(user);
 			return Response.ok().
-					entity(repo.addUser(user)).
 					build();
 		} catch (Exception e) {
 			return Response.serverError().
-					entity(e).
+					entity(e.getMessage()).
 					build();
 		}
     }
