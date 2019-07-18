@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="example-jaas-basic:war exploded">
-    <output-path>$PROJECT_DIR$/target/example-jaas-basic</output-path>
+    <output-path>$PROJECT_DIR$/target/jaas-basic</output-path>
     <properties id="maven-jee-properties">
       <options>
         <exploded>true</exploded>
@@ -14,23 +14,39 @@
           <element id="module-output" name="example-jaas-basic" />
         </element>
         <element id="directory" name="lib">
-          <element id="library" level="project" name="Maven: io.thorntail:jaxrs:2.0.0.Final" />
-          <element id="library" level="project" name="Maven: io.thorntail:container:2.0.0.Final" />
-          <element id="library" level="project" name="Maven: io.thorntail:spi:2.0.0.Final" />
+          <element id="library" level="project" name="Maven: io.thorntail:jpa-eclipselink:2.4.0.Final" />
+          <element id="library" level="project" name="Maven: io.thorntail:jpa:2.4.0.Final" />
+          <element id="library" level="project" name="Maven: io.thorntail:infinispan:2.4.0.Final" />
+          <element id="library" level="project" name="Maven: org.infinispan:infinispan-core:9.4.3.Final" />
+          <element id="library" level="project" name="Maven: org.infinispan:infinispan-commons:9.4.3.Final" />
+          <element id="library" level="project" name="Maven: io.thorntail:jmx:2.4.0.Final" />
+          <element id="library" level="project" name="Maven: io.thorntail:remoting:2.4.0.Final" />
+          <element id="library" level="project" name="Maven: io.thorntail:msc:2.4.0.Final" />
+          <element id="library" level="project" name="Maven: org.jboss.msc:jboss-msc:1.4.5.Final" />
+          <element id="library" level="project" name="Maven: org.jboss.threads:jboss-threads:2.3.2.Final" />
+          <element id="library" level="project" name="Maven: io.thorntail:bootstrap:2.4.0.Final" />
+          <element id="library" level="project" name="Maven: javax.persistence:javax.persistence-api:2.2" />
+          <element id="library" level="project" name="Maven: io.thorntail:logging:2.4.0.Final" />
+          <element id="library" level="project" name="Maven: org.jboss.logging:jboss-logging:3.3.2.Final" />
+          <element id="library" level="project" name="Maven: org.wildfly:jipijapa-eclipselink:15.0.1.Final" />
+          <element id="library" level="project" name="Maven: org.wildfly:jipijapa-spi:15.0.1.Final" />
+          <element id="library" level="project" name="Maven: org.jboss:jandex:2.0.5.Final" />
+          <element id="library" level="project" name="Maven: org.jboss.spec.javax.annotation:jboss-annotations-api_1.3_spec:1.0.1.Final" />
+          <element id="library" level="project" name="Maven: org.jboss.spec.javax.transaction:jboss-transaction-api_1.2_spec:1.1.1.Final" />
+          <element id="library" level="project" name="Maven: org.jboss:jboss-vfs:3.2.14.Final" />
+          <element id="library" level="project" name="Maven: io.thorntail:jaxrs:2.4.0.Final" />
+          <element id="library" level="project" name="Maven: io.thorntail:container:2.4.0.Final" />
+          <element id="library" level="project" name="Maven: io.thorntail:spi:2.4.0.Final" />
           <element id="library" level="project" name="Maven: org.jboss.shrinkwrap:shrinkwrap-api:1.2.6" />
           <element id="library" level="project" name="Maven: org.jboss.shrinkwrap:shrinkwrap-impl-base:1.2.6" />
           <element id="library" level="project" name="Maven: org.jboss.shrinkwrap:shrinkwrap-spi:1.2.6" />
-          <element id="library" level="project" name="Maven: org.jboss:jandex:2.0.3.Final" />
-          <element id="library" level="project" name="Maven: io.thorntail:bootstrap:2.0.0.Final" />
-          <element id="library" level="project" name="Maven: org.jboss.modules:jboss-modules:1.6.4.Final" />
-          <element id="library" level="project" name="Maven: org.yaml:snakeyaml:1.17" />
-          <element id="library" level="project" name="Maven: io.thorntail:config-api:1.4.0" />
-          <element id="library" level="project" name="Maven: io.thorntail:config-api-runtime:1.4.0" />
-          <element id="library" level="project" name="Maven: org.jboss.logging:jboss-logging:3.3.1.Final" />
-          <element id="library" level="project" name="Maven: io.thorntail:logging:2.0.0.Final" />
-          <element id="library" level="project" name="Maven: io.thorntail:undertow:2.0.0.Final" />
-          <element id="library" level="project" name="Maven: io.thorntail:io:2.0.0.Final" />
-          <element id="library" level="project" name="Maven: io.thorntail:request-controller:2.0.0.Final" />
+          <element id="library" level="project" name="Maven: io.thorntail:config-api:1.6.1" />
+          <element id="library" level="project" name="Maven: io.thorntail:config-api-runtime:1.6.1" />
+          <element id="library" level="project" name="Maven: org.wildfly.common:wildfly-common:1.4.0.Final" />
+          <element id="library" level="project" name="Maven: io.thorntail.jdk-specific:thorntail-jdk-specific:1" />
+          <element id="library" level="project" name="Maven: io.thorntail:undertow:2.4.0.Final" />
+          <element id="library" level="project" name="Maven: io.thorntail:io:2.4.0.Final" />
+          <element id="library" level="project" name="Maven: io.thorntail:request-controller:2.4.0.Final" />
           <element id="library" level="project" name="Maven: org.jboss.shrinkwrap.descriptors:shrinkwrap-descriptors-api-jboss:2.0.0" />
           <element id="library" level="project" name="Maven: org.jboss.shrinkwrap.descriptors:shrinkwrap-descriptors-impl-jboss:2.0.0" />
           <element id="library" level="project" name="Maven: org.jboss.shrinkwrap.descriptors:shrinkwrap-descriptors-api-javaee:2.0.0" />
@@ -38,60 +54,61 @@
           <element id="library" level="project" name="Maven: org.jboss.shrinkwrap.descriptors:shrinkwrap-descriptors-impl-javaee:2.0.0" />
           <element id="library" level="project" name="Maven: org.jboss.shrinkwrap.descriptors:shrinkwrap-descriptors-impl-base:2.0.0" />
           <element id="library" level="project" name="Maven: org.jboss.shrinkwrap.descriptors:shrinkwrap-descriptors-spi:2.0.0" />
-          <element id="library" level="project" name="Maven: org.ow2.asm:asm-commons:6.0" />
-          <element id="library" level="project" name="Maven: org.ow2.asm:asm-tree:6.0" />
-          <element id="library" level="project" name="Maven: org.jboss.spec.javax.servlet:jboss-servlet-api_3.1_spec:1.0.0.Final" />
-          <element id="library" level="project" name="Maven: org.jboss.spec.javax.websocket:jboss-websocket-api_1.1_spec:1.1.1.Final" />
-          <element id="library" level="project" name="Maven: io.undertow:undertow-servlet:1.4.18.Final" />
-          <element id="library" level="project" name="Maven: io.undertow:undertow-core:1.4.18.Final" />
+          <element id="library" level="project" name="Maven: org.ow2.asm:asm-commons:7.0" />
+          <element id="library" level="project" name="Maven: org.ow2.asm:asm-tree:7.0" />
+          <element id="library" level="project" name="Maven: org.ow2.asm:asm-analysis:7.0" />
+          <element id="library" level="project" name="Maven: org.jboss.spec.javax.servlet:jboss-servlet-api_4.0_spec:1.0.0.Final" />
+          <element id="library" level="project" name="Maven: org.jboss.spec.javax.websocket:jboss-websocket-api_1.1_spec:1.1.3.Final" />
+          <element id="library" level="project" name="Maven: io.undertow:undertow-servlet:2.0.15.Final" />
+          <element id="library" level="project" name="Maven: io.undertow:undertow-core:2.0.15.Final" />
           <element id="library" level="project" name="Maven: org.jboss.xnio:xnio-api:3.3.8.Final" />
           <element id="library" level="project" name="Maven: org.jboss.xnio:xnio-nio:3.3.8.Final" />
-          <element id="library" level="project" name="Maven: io.thorntail:security:2.0.0.Final" />
-          <element id="library" level="project" name="Maven: io.thorntail:elytron:2.0.0.Final" />
-          <element id="library" level="project" name="Maven: org.jboss.spec.javax.annotation:jboss-annotations-api_1.2_spec:1.0.0.Final" />
-          <element id="library" level="project" name="Maven: io.thorntail:jaxrs-cdi:2.0.0.Final" />
-          <element id="library" level="project" name="Maven: org.ow2.asm:asm:6.0" />
-          <element id="library" level="project" name="Maven: org.jboss.spec.javax.ws.rs:jboss-jaxrs-api_2.0_spec:1.0.0.Final" />
-          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.8.9" />
-          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.8.9" />
-          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.8.9" />
-          <element id="library" level="project" name="Maven: com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.8.9" />
-          <element id="library" level="project" name="Maven: com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.8.9" />
-          <element id="library" level="project" name="Maven: com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.8.9" />
-          <element id="library" level="project" name="Maven: io.thorntail:meta-spi:2.0.0.Final" />
-          <element id="library" level="project" name="Maven: io.thorntail:cdi:2.0.0.Final" />
-          <element id="library" level="project" name="Maven: io.thorntail:cdi-config:2.0.0.Final" />
-          <element id="library" level="project" name="Maven: io.thorntail:bean-validation:2.0.0.Final" />
-          <element id="library" level="project" name="Maven: javax.validation:validation-api:1.1.0.Final" />
-          <element id="library" level="project" name="Maven: io.thorntail:ee:2.0.0.Final" />
-          <element id="library" level="project" name="Maven: io.thorntail:naming:2.0.0.Final" />
-          <element id="library" level="project" name="Maven: org.jboss.spec.javax.enterprise.concurrent:jboss-concurrency-api_1.0_spec:1.0.0.Final" />
-          <element id="library" level="project" name="Maven: org.jboss.spec.javax.interceptor:jboss-interceptors-api_1.2_spec:1.0.0.Final" />
-          <element id="library" level="project" name="Maven: org.jboss.spec.javax.el:jboss-el-api_3.0_spec:1.0.9.Final" />
+          <element id="library" level="project" name="Maven: org.jboss.spec.javax.annotation:jboss-annotations-api_1.2_spec:1.0.2.Final" />
+          <element id="library" level="project" name="Maven: io.thorntail:security:2.4.0.Final" />
+          <element id="library" level="project" name="Maven: io.thorntail:elytron:2.4.0.Final" />
+          <element id="library" level="project" name="Maven: io.thorntail:jaxrs-cdi:2.4.0.Final" />
+          <element id="library" level="project" name="Maven: org.ow2.asm:asm:7.0" />
+          <element id="library" level="project" name="Maven: org.jboss.spec.javax.ws.rs:jboss-jaxrs-api_2.1_spec:1.0.2.Final" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.9.5" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.9.5" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.9.5" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.9.5" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.9.5" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.9.5" />
+          <element id="library" level="project" name="Maven: io.thorntail:meta-spi:2.4.0.Final" />
+          <element id="library" level="project" name="Maven: io.thorntail:datasources:2.4.0.Final" />
+          <element id="library" level="project" name="Maven: io.thorntail:jca:2.4.0.Final" />
+          <element id="library" level="project" name="Maven: io.thorntail:connector:2.4.0.Final" />
+          <element id="library" level="project" name="Maven: org.jboss.spec.javax.resource:jboss-connector-api_1.7_spec:1.0.1.Final" />
+          <element id="library" level="project" name="Maven: org.jboss.ironjacamar:ironjacamar-jdbc:1.4.11.Final" />
+          <element id="library" level="project" name="Maven: io.thorntail:cdi:2.4.0.Final" />
+          <element id="library" level="project" name="Maven: io.thorntail:cdi-config:2.4.0.Final" />
+          <element id="library" level="project" name="Maven: io.thorntail:bean-validation:2.4.0.Final" />
+          <element id="library" level="project" name="Maven: io.thorntail:ee:2.4.0.Final" />
+          <element id="library" level="project" name="Maven: io.thorntail:naming:2.4.0.Final" />
+          <element id="library" level="project" name="Maven: org.jboss.spec.javax.enterprise.concurrent:jboss-concurrency-api_1.0_spec:1.0.2.Final" />
+          <element id="library" level="project" name="Maven: org.jboss.spec.javax.interceptor:jboss-interceptors-api_1.2_spec:1.0.1.Final" />
+          <element id="library" level="project" name="Maven: org.jboss.spec.javax.el:jboss-el-api_3.0_spec:1.0.13.Final" />
           <element id="library" level="project" name="Maven: org.glassfish:javax.el-impl:3.0.1-b08-jbossorg-1" />
-          <element id="library" level="project" name="Maven: io.thorntail:transactions:2.0.0.Final" />
-          <element id="library" level="project" name="Maven: org.jboss.spec.javax.transaction:jboss-transaction-api_1.2_spec:1.0.1.Final" />
-          <element id="library" level="project" name="Maven: org.jboss.narayana.jts:narayana-jts-idlj:5.5.30.Final" />
+          <element id="library" level="project" name="Maven: io.thorntail:transactions:2.4.0.Final" />
+          <element id="library" level="project" name="Maven: org.jboss.narayana.jts:narayana-jts-idlj:5.9.0.Final" />
           <element id="library" level="project" name="Maven: org.jboss.openjdk-orb:openjdk-orb:8.0.4.Final" />
-          <element id="library" level="project" name="Maven: javax.enterprise:cdi-api:1.2" />
+          <element id="library" level="project" name="Maven: javax.enterprise:cdi-api:2.0.SP1" />
           <element id="library" level="project" name="Maven: javax.inject:javax.inject:1" />
-          <element id="library" level="project" name="Maven: io.thorntail:jpa-eclipselink:2.0.0.Final" />
-          <element id="library" level="project" name="Maven: io.thorntail:jpa:2.0.0.Final" />
-          <element id="library" level="project" name="Maven: io.thorntail:datasources:2.0.0.Final" />
-          <element id="library" level="project" name="Maven: io.thorntail:jca:2.0.0.Final" />
-          <element id="library" level="project" name="Maven: io.thorntail:connector:2.0.0.Final" />
-          <element id="library" level="project" name="Maven: org.jboss.spec.javax.resource:jboss-connector-api_1.7_spec:1.0.0.Final" />
-          <element id="library" level="project" name="Maven: org.jboss.ironjacamar:ironjacamar-jdbc:1.4.6.Final" />
-          <element id="library" level="project" name="Maven: org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final" />
-          <element id="library" level="project" name="Maven: org.wildfly:jipijapa-eclipselink:11.0.0.Final" />
-          <element id="library" level="project" name="Maven: org.wildfly:jipijapa-spi:11.0.0.Final" />
-          <element id="library" level="project" name="Maven: org.jboss:jboss-vfs:3.2.12.Final" />
+          <element id="library" level="project" name="Maven: io.thorntail:ejb:2.4.0.Final" />
+          <element id="library" level="project" name="Maven: org.jboss.spec.javax.ejb:jboss-ejb-api_3.2_spec:1.0.1.Final" />
+          <element id="library" level="project" name="Maven: org.jboss.ejb3:jboss-ejb3-ext-api:2.2.0.Final" />
+          <element id="library" level="project" name="Maven: io.thorntail:webservices:2.4.0.Final" />
+          <element id="library" level="project" name="Maven: org.jboss.spec.javax.xml.ws:jboss-jaxws-api_2.3_spec:1.0.0.Final" />
+          <element id="library" level="project" name="Maven: javax.jws:jsr181-api:1.0-MR1" />
+          <element id="library" level="project" name="Maven: org.jboss.spec.javax.xml.soap:jboss-saaj-api_1.3_spec:1.0.6.Final" />
           <element id="library" level="project" name="Maven: mysql:mysql-connector-java:8.0.11" />
           <element id="library" level="project" name="Maven: com.google.protobuf:protobuf-java:2.6.0" />
+          <element id="library" level="project" name="Maven: javax.validation:validation-api:1.1.0.Final" />
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/target/example-jaas-basic/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/target/jaas-basic/META-INF/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="example-jaas-basic/web/Web" />
     </root>

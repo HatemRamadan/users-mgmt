@@ -1,4 +1,4 @@
-package org.wildfly.swarm.examples.jaas.basic;
+package com.sumerge.program.user.entity;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -13,15 +13,15 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * @author Arun Gupta
+ * @author Ahmed Anwar
  */
 @Entity
 @Table(name = "USERS")
 @NamedQueries({
-        @NamedQuery(name = "Employee.findAll", query = "SELECT e FROM Employee e")
+        @NamedQuery(name = "User.findAll", query = "SELECT e FROM User e")
 })
 @XmlRootElement
-public class Employee implements Serializable {
+public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -35,10 +35,10 @@ public class Employee implements Serializable {
 
     private String role;
 
-    public Employee() {
+    public User() {
     }
 
-    public Employee(String name) {
+    public User(String name) {
         this.name = name;
     }
 
@@ -83,9 +83,9 @@ public class Employee implements Serializable {
     public boolean equals(Object obj) {
         if (null == obj)
             return false;
-        if (!(obj instanceof Employee))
+        if (!(obj instanceof User))
             return false;
-        Employee that = (Employee) obj;
+        User that = (User) obj;
 		return that.name.equals(this.name) && that.id == this.id;
     }
 

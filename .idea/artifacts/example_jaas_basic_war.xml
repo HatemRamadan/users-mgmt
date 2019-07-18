@@ -7,7 +7,7 @@
         <packaging>war</packaging>
       </options>
     </properties>
-    <root id="archive" name="example-jaas-basic.war">
+    <root id="archive" name="jaas-basic.war">
       <element id="artifact" artifact-name="example-jaas-basic:war exploded" />
     </root>
   </artifact>
