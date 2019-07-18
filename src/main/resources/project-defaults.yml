@@ -7,8 +7,11 @@ swarm:
           security-domain: my-domain
         security-constraints:
           - url-pattern: /*
+            methods: [GET, POST, PUT, DELETE]
+            roles: [admin]
+          - url-pattern: /*
             methods: [GET]
-            roles: [admin, user]
+            roles: [user]
   security:
     security-domains:
       my-domain:
