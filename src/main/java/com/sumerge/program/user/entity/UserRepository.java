@@ -5,12 +5,12 @@ import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.Context;
 
 import static java.util.logging.Level.SEVERE;
 
-/**
- * @author Ahmed Anwar
- */
+
 @Stateless
 public class UserRepository {
 
@@ -19,23 +19,4 @@ public class UserRepository {
 	@PersistenceContext
 	private EntityManager em;
 
-	public List<User> getAllUsers() {
-		LOGGER.info("Fetching users list");
-		try {
-			return em.createNamedQuery("User.findAll", User.class).getResultList();
-		} catch (Exception e) {
-			LOGGER.log(SEVERE, e.getMessage(), e);
-			throw e;
-		}
-	}
-
-	public void addUser(User user) {
-		LOGGER.info("Saving new user " + user);
-		try {
-			em.persist(user);
-		} catch (Exception e) {
-			LOGGER.log(SEVERE, e.getMessage(), e);
-			throw e;
-		}
-	}
 }

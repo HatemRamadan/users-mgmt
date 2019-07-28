@@ -2,9 +2,13 @@ package com.sumerge.program.rest;
 
 import com.sumerge.program.user.entity.User;
 import com.sumerge.program.user.entity.UserRepository;
+
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -31,33 +35,24 @@ public class UserResource
     @EJB
     private UserRepository repo;
 
+	@Context
+	private HttpServletRequest request;
+
     @GET
     @Produces(APPLICATION_JSON)
-    public Response get() {
-		LOGGER.info("Entering get with user " + securityContext.getUserPrincipal().toString());
+
+	public Response get() {
+
 		try {
 			return Response.ok().
-					entity(repo.getAllUsers()).
+					entity("{\"Hello\":\"Hatoom\"}").
 					build();
 		} catch (Exception e) {
 			return Response.serverError().
 					entity(e).
 					build();
 		}
+
     }
 
-    @POST
-    @Consumes(APPLICATION_JSON)
-    public Response post(User user) {
-        LOGGER.info("Entering post with user " + securityContext.getUserPrincipal().toString());
-		try {
-			repo.addUser(user);
-			return Response.ok().
-					build();
-		} catch (Exception e) {
-			return Response.serverError().
-					entity(e.getMessage()).
-					build();
-		}
-    }
 }

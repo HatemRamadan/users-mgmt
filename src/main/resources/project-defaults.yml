@@ -21,7 +21,7 @@ swarm:
               code: Database
               flag: required
               module-options:
-                dsJndiName: java:jboss/datasources/studentdb
+                dsJndiName: java:jboss/datasources/usersdb
                 principalsQuery: SELECT PASSWORD FROM USERS WHERE USERNAME=?
                 rolesQuery: SELECT ROLE, 'Roles' FROM USERS WHERE USERNAME=?
   datasources:
@@ -30,8 +30,8 @@ swarm:
         driver-class-name: com.mysql.cj.jdbc.Driver
         driver-module-name: com.mysql
     data-sources:
-      studentdb:
+      usersdb:
         driver-name: com.mysql
-        connection-url: jdbc:mysql://mysql-host:3306/AUTHDB
+        connection-url: jdbc:mysql://mysql-host:3306/USERSDB
         user-name: root
-        password: P@ssw0rd
+        password: hat1716.com
