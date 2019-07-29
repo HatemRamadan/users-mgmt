@@ -9,11 +9,7 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
@@ -45,7 +41,7 @@ public class UserResource
 
 		try {
 			return Response.ok().
-					entity("{\"Hello\":\"Hatoom\"}").
+					entity(repo.getUsersNames()).
 					build();
 		} catch (Exception e) {
 			return Response.serverError().
@@ -54,5 +50,41 @@ public class UserResource
 		}
 
     }
+	@GET
+	@Path("delete/{id}")
+	@Produces(APPLICATION_JSON)
+
+	public Response delete(@PathParam("id") int id) {
+
+		try {
+			repo.delete(id);
+			return Response.ok().
+					entity("Deleted").
+					build();
+		} catch (Exception e) {
+			return Response.serverError().
+					entity(e).
+					build();
+		}
+
+	}
+
+	@GET
+	@Path("groups")
+	@Produces(APPLICATION_JSON)
+
+	public Response getGroups() {
+
+		try {
+			return Response.ok().
+					entity(repo.getGroups()).
+					build();
+		} catch (Exception e) {
+			return Response.serverError().
+					entity(e).
+					build();
+		}
+
+	}
 
 }
