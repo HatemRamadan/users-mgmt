@@ -1,5 +1,7 @@
 package com.sumerge.program.rest;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.sumerge.program.MyJsonObject;
 import com.sumerge.program.group.entity.Group;
 import com.sumerge.program.user.entity.User;
 import com.sumerge.program.user.entity.UserRepository;
@@ -9,6 +11,7 @@ import java.util.Base64;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.json.Json;
 import javax.json.JsonObject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.Positive;
@@ -37,7 +40,70 @@ public class UserResource
 	private HttpServletRequest request;
 
 	@GET
-	@Path("test")
+	public Response get() {
+		try {
+			if(securityContext.isUserInRole("user"))
+			{
+			return Response.ok().
+					entity(repo.getUsersNames()).
+					build();
+			}
+			return Response.ok().
+					entity(repo.getAllUsers()).
+					build();
+
+		} catch (Exception e) {
+			return Response.serverError().
+					entity(e).
+					build();
+		}
+	}
+
+	@PUT
+	@Path("update/{username}")
+	public Response updateUser(@PathParam("username") String username, MyJsonObject jsonObject){
+		if(!securityContext.isUserInRole("admin") && !securityContext.getUserPrincipal().toString().equals(username))
+			return Response.status(Response.Status.FORBIDDEN).build();
+		try {
+			if(jsonObject.getNewName()!=null)
+				repo.updateName(username,jsonObject.getNewName());
+			else if(jsonObject.getNewUsername()!=null)
+				repo.updateUsername(username,jsonObject.getNewUsername());
+			else if(jsonObject.getNewPassword()!=null)
+				repo.resetPassword(username,jsonObject.getOldPassword(),jsonObject.getNewPassword());
+			return Response.ok().
+					entity("Updated").
+					build();
+		} catch (Exception e) {
+			return Response.serverError().
+					entity(e.getMessage()+"	"+e).
+					build();
+		}
+	}
+
+	@PUT
+	@Path("move")
+	public Response moveUser( MyJsonObject jsonObject){
+		try {
+			if(jsonObject.getNewGroupID()!=-1&&jsonObject.getOldGroupID()!=-1)
+				repo.moveUser(jsonObject.getUsername(),jsonObject.getOldGroupID(),jsonObject.getNewGroupID());
+			else if(jsonObject.getNewGroupID()!=-1)
+				repo.addUserToGroup(jsonObject.getUsername(),jsonObject.getNewGroupID());
+			else if(jsonObject.getOldGroupID()!=-1)
+				repo.removeUserFromGroup(jsonObject.getUsername(),jsonObject.getOldGroupID());
+			return Response.ok().
+					entity("SUCCESS").
+					build();
+		} catch (Exception e) {
+			return Response.serverError().
+					entity(e.getMessage()+"	"+e).
+					build();
+		}
+	}
+
+
+	@POST
+	@Path("user")
 	public Response addUser(User user){
 		try {
 			repo.addUser(user);
@@ -51,23 +117,8 @@ public class UserResource
 		}
 	}
 
-	@GET
-	@Path("test2")
-	public Response addUserToGroup(){
-		try {
-			repo.addUserToGroup("user",1);
-			return Response.ok().
-					entity("Added").
-					build();
-		} catch (Exception e) {
-			return Response.serverError().
-					entity(e).
-					build();
-		}
-	}
-
 	@POST
-	@Path("test3")
+	@Path("group")
 	public Response addGroup(Group group){
 		try {
 			repo.addGroup(group);
@@ -80,41 +131,14 @@ public class UserResource
 					build();
 		}
 	}
-	@GET
-	@Path("test4")
-	public Response moveFromTo(User user){
-		try {
-			repo.moveUser("user",1,2);
-			return Response.ok().
-					entity("Added").
-					build();
-		} catch (Exception e) {
-			return Response.serverError().
-					entity(e).
-					build();
-		}
-	}
 
-    @GET
-	public Response get() {
+
+	@DELETE
+	@Path("user/{username}")
+	public Response deleteUser(@PathParam("username") String username) {
 
 		try {
-			return Response.ok().
-					entity(repo.getUsersNames()).
-					build();
-		} catch (Exception e) {
-			return Response.serverError().
-					entity(e).
-					build();
-		}
-
-    }
-	@GET
-	@Path("delete/{id}")
-	public Response delete(@PathParam("id") int id) {
-
-		try {
-			repo.deleteUser(id);
+			repo.deleteUser(username);
 			return Response.ok().
 					entity("Deleted").
 					build();
@@ -126,38 +150,22 @@ public class UserResource
 
 	}
 
-	@PUT
-	@Path("editUsername")
-	public Response editUsername(JsonObject jsonObject) {
-		System.out.println(jsonObject.toString());
+	@DELETE
+	@Path("group/{id}")
+	public Response deleteGroup(@PathParam("id") int id) {
+
 		try {
-			repo.updateUsername(jsonObject.getString("oldUsername"),jsonObject.getString("newUsername"));
+			repo.deleteGroup(id);
 			return Response.ok().
-					entity("Updated").
+					entity("Deleted").
 					build();
 		} catch (Exception e) {
 			return Response.serverError().
-					entity(e).
+					entity(e.getMessage()).
 					build();
 		}
 
 	}
 
-	@POST
-	@Path("editName")
-	public Response editName(String username, String newName) {
-
-		try {
-			repo.updateName(username,newName);
-			return Response.ok().
-					entity("Updated").
-					build();
-		} catch (Exception e) {
-			return Response.serverError().
-					entity(e).
-					build();
-		}
-
-	}
 
 }
