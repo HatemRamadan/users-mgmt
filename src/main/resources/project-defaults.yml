@@ -22,8 +22,8 @@ swarm:
               flag: required
               module-options:
                 dsJndiName: java:jboss/datasources/usersdb
-                principalsQuery: SELECT PASSWORD FROM USERS WHERE USERNAME=?
-                rolesQuery: SELECT ROLE, 'Roles' FROM USERS WHERE USERNAME=?
+                principalsQuery: SELECT PASSWORD FROM USERS WHERE USERNAME=? And DELETED = false
+                rolesQuery: SELECT ROLE, 'Roles' FROM USERS WHERE USERNAME=? And DELETED = false
   datasources:
     jdbc-drivers:
       com.mysql:
