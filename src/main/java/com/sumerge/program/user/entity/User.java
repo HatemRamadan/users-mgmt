@@ -24,11 +24,10 @@ public class User implements Serializable {
     private int userid;
     private String name;
     private String username;
-    @JsonIgnore
     private String password;
-    @JsonIgnore
+
     private boolean deleted;
-    @JsonIgnore
+
     private String role;
     @ManyToMany
     @JsonIgnore
