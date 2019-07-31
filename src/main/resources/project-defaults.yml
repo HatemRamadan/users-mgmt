@@ -32,6 +32,8 @@ swarm:
               flag: required
               module-options:
                 dsJndiName: java:jboss/datasources/usersdb
+                hashAlgorithm: SHA-256
+                hashEncoding: Hex
                 principalsQuery: SELECT PASSWORD FROM USERS WHERE USERNAME=? And DELETED = false
                 rolesQuery: SELECT ROLE, 'Roles' FROM USERS WHERE USERNAME=? And DELETED = false
   datasources:
