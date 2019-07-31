@@ -62,15 +62,17 @@ public class UserResource
 	@PUT
 	@Path("update/{username}")
 	public Response updateUser(@PathParam("username") String username, MyJsonObject jsonObject){
-		if(!securityContext.isUserInRole("admin") && !securityContext.getUserPrincipal().toString().equals(username))
+		boolean isAdmin = securityContext.isUserInRole("admin");
+		String mUsername = securityContext.getUserPrincipal().toString();
+	    if(!isAdmin && !mUsername.equals(username))
 			return Response.status(Response.Status.FORBIDDEN).build();
 		try {
 			if(jsonObject.getNewName()!=null)
-				repo.updateName(username,jsonObject.getNewName());
+				repo.updateName(username,jsonObject.getNewName(),mUsername);
 			else if(jsonObject.getNewUsername()!=null)
-				repo.updateUsername(username,jsonObject.getNewUsername());
+				repo.updateUsername(username,jsonObject.getNewUsername(),mUsername);
 			else if(jsonObject.getNewPassword()!=null)
-				repo.resetPassword(username,jsonObject.getOldPassword(),jsonObject.getNewPassword());
+				repo.resetPassword(username,jsonObject.getOldPassword(),jsonObject.getNewPassword(),mUsername);
 			return Response.ok().
 					entity("Updated").
 					build();
@@ -85,12 +87,13 @@ public class UserResource
 	@Path("move")
 	public Response moveUser( MyJsonObject jsonObject){
 		try {
+			String mUsername = securityContext.getUserPrincipal().toString();
 			if(jsonObject.getNewGroupID()!=-1&&jsonObject.getOldGroupID()!=-1)
-				repo.moveUser(jsonObject.getUsername(),jsonObject.getOldGroupID(),jsonObject.getNewGroupID());
+				repo.moveUser(jsonObject.getUsername(),jsonObject.getOldGroupID(),jsonObject.getNewGroupID(),mUsername);
 			else if(jsonObject.getNewGroupID()!=-1)
-				repo.addUserToGroup(jsonObject.getUsername(),jsonObject.getNewGroupID());
+				repo.addUserToGroup(jsonObject.getUsername(),jsonObject.getNewGroupID(),mUsername);
 			else if(jsonObject.getOldGroupID()!=-1)
-				repo.removeUserFromGroup(jsonObject.getUsername(),jsonObject.getOldGroupID());
+				repo.removeUserFromGroup(jsonObject.getUsername(),jsonObject.getOldGroupID(),mUsername);
 			return Response.ok().
 					entity("SUCCESS").
 					build();
@@ -106,7 +109,7 @@ public class UserResource
 	@Path("user")
 	public Response addUser(User user){
 		try {
-			repo.addUser(user);
+			repo.addUser(user,securityContext.getUserPrincipal().toString());
 			return Response.ok().
 					entity("Added").
 					build();
@@ -121,7 +124,7 @@ public class UserResource
 	@Path("group")
 	public Response addGroup(Group group){
 		try {
-			repo.addGroup(group);
+			repo.addGroup(group,securityContext.getUserPrincipal().toString());
 			return Response.ok().
 					entity("Added").
 					build();
@@ -138,7 +141,7 @@ public class UserResource
 	public Response deleteUser(@PathParam("username") String username) {
 
 		try {
-			repo.deleteUser(username);
+			repo.deleteUser(username,securityContext.getUserPrincipal().toString());
 			return Response.ok().
 					entity("Deleted").
 					build();
@@ -155,7 +158,7 @@ public class UserResource
 	public Response deleteGroup(@PathParam("id") int id) {
 
 		try {
-			repo.deleteGroup(id);
+			repo.deleteGroup(id,securityContext.getUserPrincipal().toString());
 			return Response.ok().
 					entity("Deleted").
 					build();
