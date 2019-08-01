@@ -86,6 +86,13 @@
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-mapper-asl</artifactId>
@@ -105,6 +112,12 @@
             <artifactId>json</artifactId>
             <version>20090211</version>
         </dependency>
+
+        <dependency>
+                <groupId>com.mailjet</groupId>
+                <artifactId>mailjet-client</artifactId>
+                <version>4.2.0</version>
+            </dependency>
 
         <dependency>
             <groupId>org.glassfish.jersey.media</groupId>

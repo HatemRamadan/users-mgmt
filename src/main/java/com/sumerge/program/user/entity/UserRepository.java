@@ -2,6 +2,7 @@ package com.sumerge.program.user.entity;
 
 import com.sumerge.program.group.entity.Group;
 import com.sumerge.program.log.Log;
+import com.sumerge.program.uuid.Uuid;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;
@@ -11,6 +12,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.json.Json;
@@ -93,6 +95,19 @@ public class UserRepository {
 		//Audit Log
 		em.persist(createAuditLog(user,mUsername,"Delete user","Users",user.getUserid()));
 	}
+
+	@Transactional
+	public void undoUserDeletion(String username, String mUsername) throws Exception {
+		User user = (User) em.createQuery("SELECT u FROM User u where u.username = :username")
+				.setParameter("username", username).getSingleResult();
+		if(user==null)
+			throw new RuntimeException("user does not exist");
+		user.setDeleted(false);
+		em.merge(user);
+
+		//Audit Log
+		em.persist(createAuditLog(user,mUsername,"undo user deletion","Users",user.getUserid()));
+	}
 	@Transactional
 	public void addUser(User user,String mUsername) throws Exception{
 		user.setPassword(hash(user.getPassword()));
@@ -147,10 +162,47 @@ public class UserRepository {
 			throw new Exception("Default Group can not be deleted!");
 		em.remove(group);
 
+
 		//Audit Log
 		em.persist(createAuditLog(group,mUsername,"Delete Group","Groups",group.getGroupid()));
 	}
 
+	public String getEmail(String username){
+		User user = (User) em.createQuery("SELECT u FROM User u where u.username = :username")
+				.setParameter("username", username).getSingleResult();
+		if(user==null)
+			throw new RuntimeException("user does not exist");
+		return user.getEmail();
+	}
+	public String getUUID(String username) throws Exception{
+		User user = (User) em.createQuery("SELECT u FROM User u where u.username = :username")
+				.setParameter("username", username).getSingleResult();
+		if(user==null)
+			throw new Exception("user does not exist");
+		Uuid uuid = createUUID(username);
+		em.persist(uuid);
+		return uuid.getUuid();
+	}
+	public boolean validateUuid(String username,String uuid) throws Exception{
+		Uuid actualUUID = (Uuid) em.createQuery("SELECT u FROM Uuid u where u.username = :username")
+				.setParameter("username", username).getSingleResult();
+		if(actualUUID==null)
+			throw new Exception("user does not exist");
+		if(actualUUID.getUuid().equals(uuid))
+			return true;
+		else
+			return false;
+	}
+	@Transactional
+	public void resetForgottenPassword(String username, String newPassword) throws Exception{
+		User user = (User) em.createQuery("SELECT u FROM User u where u.username = :value1")
+				.setParameter("value1", username).getSingleResult();
+		user.setPassword(hash(newPassword));
+		em.merge(user);
+
+		//Audit Log
+		em.persist(createAuditLog(user,username,"Update Password","Users",user.getUserid()));
+	}
 	private Log createAuditLog(Object entity, String author, String name, String table,int id){
 		ObjectMapper objectMapper = new ObjectMapper();
 
@@ -164,6 +216,10 @@ public class UserRepository {
 		}
 		return auditLog;
 	}
+	private Uuid createUUID(String username){
+		UUID uuid = UUID.randomUUID();
+		return(new Uuid(username,uuid.toString()));
+	}
 	private static String hash(String input) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		MessageDigest md5 = MessageDigest.getInstance("SHA-256");
 		byte[] digest = md5.digest(input.getBytes("UTF-8"));
@@ -173,6 +229,7 @@ public class UserRepository {
 		}
 		return sb.toString();
 	}
+
 	public List<Group> getGroups(){
 		return em.createQuery("select g from Group g", Group.class).getResultList();
 	}

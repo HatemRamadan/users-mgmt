@@ -16,10 +16,10 @@ swarm:
             methods: [PUT]
             roles: [admin]
           - url-pattern: /user/*
-            methods: [POST, DELETE]
+            methods: [POST, DELETE, PUT]
             roles: [admin]
           - url-pattern: /group/*
-            methods: [POST, DELETE]
+            methods: [POST, DELETE, PUT]
             roles: [admin]
 
   security:

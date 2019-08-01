@@ -29,7 +29,7 @@ public class User implements Serializable {
     private String name;
     private String username;
     private String password;
-
+    private String email;
     private boolean deleted;
 
     private String role;
@@ -97,4 +97,11 @@ private List<Group> groups;
         this.groups = groups;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }
