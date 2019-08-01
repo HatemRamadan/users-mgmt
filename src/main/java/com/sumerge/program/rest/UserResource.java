@@ -1,20 +1,16 @@
 package com.sumerge.program.rest;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.sumerge.EmailRequest;
 import com.sumerge.program.MyJsonObject;
 import com.sumerge.program.group.entity.Group;
 import com.sumerge.program.user.entity.User;
 import com.sumerge.program.user.entity.UserRepository;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
-import java.util.logging.Logger;
+
+import org.apache.log4j.Logger;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
-import javax.json.Json;
-import javax.json.JsonObject;
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.Positive;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
@@ -28,7 +24,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 @Consumes(APPLICATION_JSON)
 public class UserResource
 {
-    private static final Logger LOGGER = Logger.getLogger(UserResource.class.getName());
+    private static final Logger logger = Logger.getLogger(UserResource.class.getName());
 
     @Context
     private SecurityContext securityContext;
@@ -41,6 +37,7 @@ public class UserResource
 
 	@GET
 	public Response get() {
+		logger.debug("Entering Get users endpoint");
 		try {
 			if(securityContext.isUserInRole("user"))
 			{
@@ -170,5 +167,55 @@ public class UserResource
 
 	}
 
+	@PUT
+	@Path("user/{username}")
+	public Response undoUserDeletion(@PathParam("username") String username) {
 
+		try {
+			repo.undoUserDeletion(username,securityContext.getUserPrincipal().toString());
+			return Response.ok().
+					entity("Deletion reverted").
+					build();
+		} catch (Exception e) {
+			return Response.serverError().
+					entity(e.getMessage()).
+					build();
+		}
+
+	}
+
+	@POST
+	@Path("forgotPassword")
+	public Response forgotPassword(MyJsonObject jsonObject) {
+		try {
+			String email = repo.getEmail(jsonObject.getUsername());
+			String uuid = repo.getUUID(jsonObject.getUsername());
+			EmailRequest.sendEmail(jsonObject.getUsername(),email,uuid);
+			return Response.ok().
+					entity("SENT").
+					build();
+		} catch (Exception e) {
+			return Response.serverError().
+					entity(e.getMessage()).
+					build();
+		}
+
+	}
+
+	@PUT
+	@Path("resetPassword/{uuid}")
+	public Response resetPassword(@PathParam("uuid") String uuid, MyJsonObject jsonObject) {
+		try {
+			if(repo.validateUuid(jsonObject.getUsername(),uuid))
+				repo.resetForgottenPassword(jsonObject.getUsername(),jsonObject.getNewPassword());
+			return Response.ok().
+					entity("Password reset").
+					build();
+		} catch (Exception e) {
+			return Response.serverError().
+					entity(e.getMessage()).
+					build();
+		}
+
+	}
 }
