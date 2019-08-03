@@ -1,6 +1,4 @@
-package com.sumerge.program.group.entity;
-
-import com.sumerge.program.user.entity.User;
+package com.sumerge.program.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;

@@ -1,16 +1,10 @@
-package com.sumerge.program.user.entity;
+package com.sumerge.program.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import com.fasterxml.jackson.jaxrs.json.annotation.JSONP;
-import com.sumerge.program.group.entity.Group;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.sumerge.program.entity.Group;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Objects;
-import javax.json.JsonObject;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 

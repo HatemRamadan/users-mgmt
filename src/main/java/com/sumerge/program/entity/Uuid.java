@@ -1,4 +1,4 @@
-package com.sumerge.program.uuid;
+package com.sumerge.program.entity;
 
 import javax.persistence.*;
 
