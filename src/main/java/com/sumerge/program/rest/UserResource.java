@@ -1,12 +1,12 @@
 package com.sumerge.program.rest;
 
-import com.sumerge.EmailRequest;
+import com.sumerge.program.EmailRequest;
 import com.sumerge.program.MyJsonObject;
-import com.sumerge.program.group.entity.Group;
-import com.sumerge.program.user.entity.User;
-import com.sumerge.program.user.entity.UserRepository;
+import com.sumerge.program.entity.User;
+import com.sumerge.program.repo.UserRepository;
 
 
+import com.sumerge.program.repo.UuidRepository;
 import org.apache.log4j.Logger;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -30,7 +30,10 @@ public class UserResource
     private SecurityContext securityContext;
 
     @EJB
-    private UserRepository repo;
+    private UserRepository userRepository;
+
+    @EJB
+	private UuidRepository uuidRepository;
 
 	@Context
 	private HttpServletRequest request;
@@ -42,11 +45,11 @@ public class UserResource
 			if(securityContext.isUserInRole("user"))
 			{
 			return Response.ok().
-					entity(repo.getUsersNames()).
+					entity(userRepository.getUsersNames()).
 					build();
 			}
 			return Response.ok().
-					entity(repo.getAllUsers()).
+					entity(userRepository.getAllUsers()).
 					build();
 
 		} catch (Exception e) {
@@ -65,11 +68,11 @@ public class UserResource
 			return Response.status(Response.Status.FORBIDDEN).build();
 		try {
 			if(jsonObject.getNewName()!=null)
-				repo.updateName(username,jsonObject.getNewName(),mUsername);
+				userRepository.updateName(username,jsonObject.getNewName(),mUsername);
 			else if(jsonObject.getNewUsername()!=null)
-				repo.updateUsername(username,jsonObject.getNewUsername(),mUsername);
+				userRepository.updateUsername(username,jsonObject.getNewUsername(),mUsername);
 			else if(jsonObject.getNewPassword()!=null)
-				repo.resetPassword(username,jsonObject.getOldPassword(),jsonObject.getNewPassword(),mUsername);
+				userRepository.resetPassword(username,jsonObject.getOldPassword(),jsonObject.getNewPassword(),mUsername);
 			return Response.ok().
 					entity("Updated").
 					build();
@@ -80,33 +83,11 @@ public class UserResource
 		}
 	}
 
-	@PUT
-	@Path("move")
-	public Response moveUser( MyJsonObject jsonObject){
-		try {
-			String mUsername = securityContext.getUserPrincipal().toString();
-			if(jsonObject.getNewGroupID()!=-1&&jsonObject.getOldGroupID()!=-1)
-				repo.moveUser(jsonObject.getUsername(),jsonObject.getOldGroupID(),jsonObject.getNewGroupID(),mUsername);
-			else if(jsonObject.getNewGroupID()!=-1)
-				repo.addUserToGroup(jsonObject.getUsername(),jsonObject.getNewGroupID(),mUsername);
-			else if(jsonObject.getOldGroupID()!=-1)
-				repo.removeUserFromGroup(jsonObject.getUsername(),jsonObject.getOldGroupID(),mUsername);
-			return Response.ok().
-					entity("SUCCESS").
-					build();
-		} catch (Exception e) {
-			return Response.serverError().
-					entity(e.getMessage()+"	"+e).
-					build();
-		}
-	}
-
-
 	@POST
 	@Path("user")
 	public Response addUser(User user){
 		try {
-			repo.addUser(user,securityContext.getUserPrincipal().toString());
+			userRepository.addUser(user,securityContext.getUserPrincipal().toString());
 			return Response.ok().
 					entity("Added").
 					build();
@@ -116,29 +97,12 @@ public class UserResource
 					build();
 		}
 	}
-
-	@POST
-	@Path("group")
-	public Response addGroup(Group group){
-		try {
-			repo.addGroup(group,securityContext.getUserPrincipal().toString());
-			return Response.ok().
-					entity("Added").
-					build();
-		} catch (Exception e) {
-			return Response.serverError().
-					entity(e).
-					build();
-		}
-	}
-
 
 	@DELETE
 	@Path("user/{username}")
 	public Response deleteUser(@PathParam("username") String username) {
-
 		try {
-			repo.deleteUser(username,securityContext.getUserPrincipal().toString());
+			userRepository.deleteUser(username,securityContext.getUserPrincipal().toString());
 			return Response.ok().
 					entity("Deleted").
 					build();
@@ -147,32 +111,13 @@ public class UserResource
 					entity(e).
 					build();
 		}
-
-	}
-
-	@DELETE
-	@Path("group/{id}")
-	public Response deleteGroup(@PathParam("id") int id) {
-
-		try {
-			repo.deleteGroup(id,securityContext.getUserPrincipal().toString());
-			return Response.ok().
-					entity("Deleted").
-					build();
-		} catch (Exception e) {
-			return Response.serverError().
-					entity(e.getMessage()).
-					build();
-		}
-
 	}
 
 	@PUT
 	@Path("user/{username}")
 	public Response undoUserDeletion(@PathParam("username") String username) {
-
 		try {
-			repo.undoUserDeletion(username,securityContext.getUserPrincipal().toString());
+			userRepository.undoUserDeletion(username,securityContext.getUserPrincipal().toString());
 			return Response.ok().
 					entity("Deletion reverted").
 					build();
@@ -181,15 +126,14 @@ public class UserResource
 					entity(e.getMessage()).
 					build();
 		}
-
 	}
 
 	@POST
 	@Path("forgotPassword")
 	public Response forgotPassword(MyJsonObject jsonObject) {
 		try {
-			String email = repo.getEmail(jsonObject.getUsername());
-			String uuid = repo.getUUID(jsonObject.getUsername());
+			String email = userRepository.getEmail(jsonObject.getUsername());
+			String uuid = uuidRepository.getUUID(jsonObject.getUsername());
 			EmailRequest.sendEmail(jsonObject.getUsername(),email,uuid);
 			return Response.ok().
 					entity("SENT").
@@ -199,15 +143,14 @@ public class UserResource
 					entity(e.getMessage()).
 					build();
 		}
-
 	}
 
 	@PUT
 	@Path("resetPassword/{uuid}")
 	public Response resetPassword(@PathParam("uuid") String uuid, MyJsonObject jsonObject) {
 		try {
-			if(repo.validateUuid(jsonObject.getUsername(),uuid))
-				repo.resetForgottenPassword(jsonObject.getUsername(),jsonObject.getNewPassword());
+			if(uuidRepository.validateUuid(jsonObject.getUsername(),uuid))
+				userRepository.resetForgottenPassword(jsonObject.getUsername(),jsonObject.getNewPassword());
 			return Response.ok().
 					entity("Password reset").
 					build();
@@ -216,6 +159,5 @@ public class UserResource
 					entity(e.getMessage()).
 					build();
 		}
-
 	}
 }

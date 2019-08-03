@@ -1,4 +1,4 @@
-package com.sumerge;
+package com.sumerge.program;
 
 import com.mailjet.client.ClientOptions;
 import com.mailjet.client.MailjetClient;

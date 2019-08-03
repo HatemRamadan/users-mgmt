@@ -1,4 +1,4 @@
-package com.sumerge.program.log;
+package com.sumerge.program.entity;
 
 
 
