@@ -2,16 +2,16 @@ package com.sumerge.program.exception;
 
 import java.io.Serializable;
 
-public class NoSuchUser extends RuntimeException implements Serializable {
+public class NoSuchGroup extends RuntimeException implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    public NoSuchUser() {
+    public NoSuchGroup() {
         super();
     }
-    public NoSuchUser(String msg)   {
+    public NoSuchGroup(String msg)   {
         super(msg);
     }
-    public NoSuchUser(String msg, Exception e)  {
+    public NoSuchGroup(String msg, Exception e)  {
         super(msg, e);
     }
 }

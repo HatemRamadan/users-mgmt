@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -187,8 +186,5 @@ public class UserRepository {
 		return sb.toString();
 	}
 
-	public List<Group> getGroups(){
-		return em.createQuery("select g from Group g", Group.class).getResultList();
-	}
 
 }
