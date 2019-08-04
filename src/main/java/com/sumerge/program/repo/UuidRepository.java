@@ -2,6 +2,7 @@ package com.sumerge.program.repo;
 
 import com.sumerge.program.entity.User;
 import com.sumerge.program.entity.Uuid;
+import com.sumerge.program.exception.NoSuchUser;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -14,20 +15,20 @@ public class UuidRepository {
     @PersistenceContext
     private EntityManager em;
 
-    public String getUUID(String username) throws Exception{
+    public String getUUID(String username) throws NoSuchUser{
         User user = (User) em.createQuery("SELECT u FROM User u where u.username = :username")
                 .setParameter("username", username).getSingleResult();
         if(user==null)
-            throw new Exception("user does not exist");
+            throw new NoSuchUser("user does not exist");
         Uuid uuid = createUUID(username);
         em.persist(uuid);
         return uuid.getUuid();
     }
-    public boolean validateUuid(String username,String uuid) throws Exception{
+    public boolean validateUuid(String username,String uuid) throws NoSuchUser{
         Uuid actualUUID = (Uuid) em.createQuery("SELECT u FROM Uuid u where u.username = :username")
                 .setParameter("username", username).getSingleResult();
         if(actualUUID==null)
-            throw new Exception("user does not exist");
+            throw new NoSuchUser("user does not exist");
         if(actualUUID.getUuid().equals(uuid))
             return true;
         else
