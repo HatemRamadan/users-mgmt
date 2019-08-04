@@ -40,7 +40,7 @@ public class GenericExceptionMapper implements ExceptionMapper<Throwable> {
                     .entity(throwable.getMessage())
                     .build();
 
-        else if(throwable instanceof DefaultAdminException)
+        else if(throwable instanceof DefaultAdminException||throwable instanceof DefaultGroupException)
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity(throwable.getMessage())
                     .build();
@@ -54,6 +54,12 @@ public class GenericExceptionMapper implements ExceptionMapper<Throwable> {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                     .entity(throwable.getMessage())
                     .build();
+
+        else if(throwable instanceof NoSuchGroup)
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(throwable.getMessage())
+                    .build();
+
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                 .entity(throwable.getMessage())
                 .build();

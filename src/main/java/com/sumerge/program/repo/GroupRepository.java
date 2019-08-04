@@ -2,6 +2,7 @@ package com.sumerge.program.repo;
 
 import com.sumerge.program.entity.Group;
 import com.sumerge.program.entity.User;
+import com.sumerge.program.exception.*;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -18,7 +19,7 @@ public class GroupRepository {
     private EntityManager em;
 
     @Transactional
-    public void addGroup(Group group, String mUsername){
+    public void addGroup(Group group, String mUsername) throws AuditLogException{
         em.persist(group);
 
         //Audit Log
@@ -26,32 +27,34 @@ public class GroupRepository {
     }
 
     @Transactional
-    public void deleteGroup(int id,String mUsername) throws Exception {
+    public void deleteGroup(int id,String mUsername) throws AuditLogException,DefaultGroupException {
         Group group = em.find(Group.class,id);
+        if(group==null)
+            throw new NoSuchGroup("group does not exist");
         if(group.getGroupid()==1)
-            throw new Exception("Default Group can not be deleted!");
+            throw new DefaultGroupException("Default Group can not be deleted!");
         em.remove(group);
-
 
         //Audit Log
         em.persist(UserRepository.createAuditLog(group,mUsername,"Delete Group","Groups",group.getGroupid()));
     }
 
     @Transactional
-    public void moveUser(String username, int oldGroupId, int newGroupId,String mUsername) throws RuntimeException {
+    public void moveUser(String username, int oldGroupId, int newGroupId,String mUsername) throws NoSuchGroup,NoSuchUser,DefaultAdminException,AuditLogException {
         removeUserFromGroup(username,oldGroupId,mUsername);
         addUserToGroup(username,newGroupId,mUsername);
     }
 
     @Transactional
-    public void addUserToGroup(String username, int newGroupId,String mUsername){
+    public void addUserToGroup(String username, int newGroupId,String mUsername) throws NoSuchUser {
         Group newGroup = em.find(Group.class,newGroupId);
         if(newGroup==null)
-            throw new RuntimeException("Old group does not exist!");
-        User user = (User) em.createQuery("SELECT u FROM User u where u.username = :username")
-                .setParameter("username", username).getSingleResult();
-        if(user==null)
-            throw new RuntimeException("user does not exist");
+            throw new NoSuchGroup("Old group does not exist!");
+        List<User> users =  em.createQuery("SELECT u FROM User u where u.username = :username")
+                .setParameter("username", username).getResultList();
+        if(users.size()==0)
+            throw new NoSuchUser("user does not exist");
+        User user = users.get(0);
         List<Group> userGroups = user.getGroups();
         userGroups.add(newGroup);
         user.setGroups(userGroups);
@@ -59,17 +62,33 @@ public class GroupRepository {
         em.persist(UserRepository.createAuditLog(user,mUsername,"Add User to Group","Users",user.getUserid()));
     }
     @Transactional
-    public void removeUserFromGroup(String username, int oldGroupId, String mUsername) throws RuntimeException{
+    public void removeUserFromGroup(String username, int oldGroupId, String mUsername) throws NoSuchUser,AuditLogException, DefaultAdminException, NoSuchGroup {
         Group oldGroup = em.find(Group.class,oldGroupId);
-        User user = (User) em.createQuery("SELECT u FROM User u where u.username = :username")
-                .setParameter("username", username).getSingleResult();
+        if(oldGroup==null)
+            throw new NoSuchGroup("group does not exist");
+
+        List<User> users =  em.createQuery("SELECT u FROM User u where u.username = :username")
+                .setParameter("username", username).getResultList();
+        if(users.size()==0)
+            throw new NoSuchUser("user does not exist");
+        User user = users.get(0);
         if(user.getUserid()==1 && oldGroupId==1)
-            throw new RuntimeException("Default Admin cannot be moved from the default group!");
+            throw new DefaultAdminException("Default Admin cannot be moved from the default group!");
         List<Group> userGroups = user.getGroups();
         userGroups.remove(oldGroup);
         user.setGroups(userGroups);
+
         //Audit Log
         em.persist(UserRepository.createAuditLog(user,mUsername,"Remove User from Group","Users",user.getUserid()));
+    }
+    public Group getSpecificGroup(int id)throws NoSuchGroup{
+        Group group = em.find(Group.class,id);
+        if(group==null)
+            throw new NoSuchGroup("group does not exist");
+        return group;
+    }
+    public List<Group> getGroups(){
+        return em.createQuery("select g from Group g", Group.class).getResultList();
     }
 
 }
