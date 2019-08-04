@@ -32,15 +32,24 @@ public class UserRepository {
 	public List<User> getUsersNames(){
 		return em.createQuery("select u.name,u.username from User u where u.deleted=false", User.class).getResultList();
 	}
+	public User getSpecificUser(String username) throws NoSuchUser{
+		List<User> userList =  em.createQuery("SELECT u FROM User u where u.username = :username")
+				.setParameter("username", username).getResultList();
+		System.out.println("List "+userList);
+		User user = (User) em.createQuery("SELECT u FROM User u where u.username = :username")
+				.setParameter("username", username).getSingleResult();
+		if(user==null)
+			throw new NoSuchUser("user does not exist");
+		return user;
+	}
 
 	@Transactional
 	public void updateUsername(String oldUsername,String newUsername, String mUsername)throws NoSuchUser,AuditLogException{
-		System.out.println("old:	"+oldUsername);
-		System.out.println("new	:"+newUsername);
-		User user = (User) em.createQuery("SELECT u FROM User u where u.username = :username")
-				.setParameter("username", oldUsername).getSingleResult();
-		if(user==null)
+		List<User> users =  em.createQuery("SELECT u FROM User u where u.username = :username")
+				.setParameter("username", oldUsername).getResultList();
+		if(users.size()==0)
 			throw new NoSuchUser("user does not exist");
+		User user = users.get(0);
 		user.setUsername(newUsername);
 		em.merge(user);
 
@@ -50,10 +59,11 @@ public class UserRepository {
 
 	@Transactional
 	public void updateName(String username,String newName, String mUsername)throws NoSuchUser,AuditLogException{
-		User user = (User) em.createQuery("SELECT u FROM User u where u.username = :username")
-				.setParameter("username", username).getSingleResult();
-		if(user==null)
+		List<User> users =  em.createQuery("SELECT u FROM User u where u.username = :username")
+				.setParameter("username", username).getResultList();
+		if(users.size()==0)
 			throw new NoSuchUser("user does not exist");
+		User user = users.get(0);
 		user.setName(newName);
 		em.merge(user);
 
@@ -63,10 +73,11 @@ public class UserRepository {
 
 	@Transactional
 	public void resetPassword(String username,String oldPassword, String newPassword, String mUsername) throws NoSuchUser,AuditLogException,UnsupportedEncodingException,NoSuchAlgorithmException,IncorrectPassword {
-		User user = (User) em.createQuery("SELECT u FROM User u where u.username = :value1")
-				.setParameter("value1", username).getSingleResult();
-		if(user==null)
+		List<User> users =  em.createQuery("SELECT u FROM User u where u.username = :username")
+				.setParameter("username", username).getResultList();
+		if(users.size()==0)
 			throw new NoSuchUser("user does not exist");
+		User user = users.get(0);
 		if(hash(oldPassword).equals(user.getPassword())) {
 			user.setPassword(hash(newPassword));
 			em.merge(user);
@@ -81,10 +92,12 @@ public class UserRepository {
 	//Admin functions
 	@Transactional
 	public void deleteUser(String username, String mUsername) throws NoSuchUser,DefaultAdminException,AuditLogException{
-		User user = (User) em.createQuery("SELECT u FROM User u where u.username = :username")
-				.setParameter("username", username).getSingleResult();
-		if(user==null)
+
+		List<User> users =  em.createQuery("SELECT u FROM User u where u.username = :username")
+				.setParameter("username", username).getResultList();
+		if(users.size()==0)
 			throw new NoSuchUser("user does not exist");
+		User user = (User) users.get(0);
 		if(user.getUserid()==1)
 			throw new DefaultAdminException("Default Admin can not be deleted!");
 		user.setDeleted(true);
@@ -96,10 +109,11 @@ public class UserRepository {
 
 	@Transactional
 	public void undoUserDeletion(String username, String mUsername) throws NoSuchUser {
-		User user = (User) em.createQuery("SELECT u FROM User u where u.username = :username")
-				.setParameter("username", username).getSingleResult();
-		if(user==null)
+		List<User> users =  em.createQuery("SELECT u FROM User u where u.username = :username")
+				.setParameter("username", username).getResultList();
+		if(users.size()==0)
 			throw new NoSuchUser("user does not exist");
+		User user = users.get(0);
 		user.setDeleted(false);
 		em.merge(user);
 
@@ -125,19 +139,21 @@ public class UserRepository {
 	}
 
 	public String getEmail(String username) throws NoSuchUser{
-		User user = (User) em.createQuery("SELECT u FROM User u where u.username = :username")
-				.setParameter("username", username).getSingleResult();
-		if(user==null)
+		List<User> users =  em.createQuery("SELECT u FROM User u where u.username = :username")
+				.setParameter("username", username).getResultList();
+		if(users.size()==0)
 			throw new NoSuchUser("user does not exist");
+		User user = users.get(0);
 		return user.getEmail();
 	}
 
 	@Transactional
 	public void resetForgottenPassword(String username, String newPassword) throws NoSuchUser,NoSuchAlgorithmException,UnsupportedEncodingException,AuditLogException{
-		User user = (User) em.createQuery("SELECT u FROM User u where u.username = :value1")
-				.setParameter("value1", username).getSingleResult();
-		if(user==null)
+		List<User> users =  em.createQuery("SELECT u FROM User u where u.username = :username")
+				.setParameter("username", username).getResultList();
+		if(users.size()==0)
 			throw new NoSuchUser("user does not exist");
+		User user = users.get(0);
 		user.setPassword(hash(newPassword));
 		em.merge(user);
 

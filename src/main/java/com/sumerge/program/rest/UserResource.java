@@ -92,6 +92,13 @@ public class UserResource
 				build();
 	}
 
+	@GET
+	@Path("user/{username}")
+	public Response getSpecificUserByUsername(@PathParam("username") String username) throws NoSuchUser{
+		User user = userRepository.getSpecificUser(username);
+		return Response.ok().entity(user).build();
+	}
+
 	@POST
 	@Path("user")
 	public Response addUser(User user) throws MissingDataException,UnsupportedEncodingException,NoSuchAlgorithmException, DatabaseException {

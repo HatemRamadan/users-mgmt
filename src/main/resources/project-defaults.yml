@@ -16,7 +16,7 @@ swarm:
             methods: [PUT]
             roles: [admin]
           - url-pattern: /user/*
-            methods: [POST, DELETE, PUT]
+            methods: [GET, POST, DELETE, PUT]
             roles: [admin]
           - url-pattern: /group/*
             methods: [POST, DELETE, PUT]
